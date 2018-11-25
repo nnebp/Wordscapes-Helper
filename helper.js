@@ -37,4 +37,14 @@ const isAnagram = (input, word) => {
   return true;
 };
 
-console.log(isAnagram("tarppq", "rappp"));
+const letters = 'bat';
+
+var lineReader = require('readline').createInterface({
+  input: require('fs').createReadStream('words.txt')
+});
+
+lineReader.on('line', function (line) {
+  if (isAnagram(letters, line))
+    console.log(line);
+});
+//TODO take in command line args
