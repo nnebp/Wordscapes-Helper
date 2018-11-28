@@ -37,24 +37,39 @@ const isAnagram = (input, word) => {
   return true;
 };
 
-const letters = 'bat';
+const getWords = (letters) => {
+  const words = [];
+  const lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream('words.txt')
+  });
+  return new Promise(function(resolve, reject) {
+    lineReader.on('line', (line) => {
+      if (isAnagram(letters, line)) {
+        words.push(line)
+      }
+    });
 
-var lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream('words.txt')
-});
+    lineReader.on('close', () => {
+      resolve(words);
+    });
+  });
 
-lineReader.on('line', function (line) {
-  if (isAnagram(letters, line))
-    console.log(line);
-});
-//TODO take in command line args
-//TODO wrap ^ into one method
+};
 
 var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
   res.send('Hello World!222');
+});
+
+app.get('/words/:letters', (req, res) => {
+  getWords(req.params.letters).then(function(result) {
+    res.send(result);
+  }, function(err) {
+    //TODO return error code
+    console.log(err); // Error: "It broke"
+  });
 });
 
 app.listen(3000, function () {
