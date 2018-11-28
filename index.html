@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+Letters: <input type="text" id="myText" value="abcdefg">
+
+<p>Search for words containing target letters</p>
+
+<button onclick="getWords()">Search</button>
+
+<p id="words"></p>
+
+<script>
+  const getWords = async () => {
+    const letters = document.getElementById("myText").value;
+
+    const response = await fetch('http://localhost:3000/words/' + letters);
+    let wordsList = await response.json();
+
+    wordsList = wordsList.map(x => "<li>" + x + "</li>");
+
+    document.getElementById("words").innerHTML = "<ul>" + wordsList.join("") + "</ul>";
+  }
+</script>
+
+</body>
+</html>

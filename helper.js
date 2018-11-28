@@ -1,3 +1,6 @@
+//Check if some string of letters is an "anagram" of a word
+//For our intents and purposes an anagram doesnt need to use all letters
+//ex: "an" counts as an anagram of "and"
 const isAnagram = (input, word) => {
 
   const inputMap = new Map();
@@ -37,6 +40,7 @@ const isAnagram = (input, word) => {
   return true;
 };
 
+//Read through the text file line by line and check if each word is an "anagram"
 const getWords = (letters) => {
   const words = [];
   const lineReader = require('readline').createInterface({
@@ -60,7 +64,7 @@ var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
-  res.send('Hello World!222');
+  res.sendfile('index.html', { root: __dirname  } );
 });
 
 app.get('/words/:letters', (req, res) => {
